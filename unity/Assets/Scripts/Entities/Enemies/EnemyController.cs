@@ -1,28 +1,29 @@
 using UnityEngine;
 
-namespace Entities.Player
+namespace Entities.Enemies
 {
-    public class PlayerController : MonoBehaviour
+    public class EnemyController : MonoBehaviour
     {
         // ReSharper disable once InconsistentNaming
-        private const float maxSpeed = 5f;
+        private const float maxSpeed = 2f;
 
         private Rigidbody2D rb;
 
-        public Animator animator;
-
-        private Vector2 movement;
+        private Animator  animator;
+        private Vector2   movement;
+        private Transform player;
 
         private void Awake()
         {
             rb       = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
+            player   = GameObject.FindWithTag("Player")?.transform;
             movement = new Vector2();
         }
 
         private void Update()
         {
-            movement.x = Input.GetAxisRaw("Horizontal");
-            movement.y = Input.GetAxisRaw("Vertical");
+            movement = (player.transform.position - transform.position).normalized;
 
             animator.SetFloat("Horizontal", movement.x);
             animator.SetFloat("Vertical",   movement.y);

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Entities.Enemies
+namespace Entities.AttackableEntities.Enemies
 {
-    public class EnemySpawnerController : MonoBehaviour
+    public class EnemySpawner : Entity
     {
         public Transform  enemyParent;
         public GameObject droneGo;

@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace Managers
+namespace Managers.WaveManagement
 {
     public class Wave
     {

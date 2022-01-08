@@ -1,7 +1,7 @@
 using System.Collections;
 using Entities.AttackableEntities.Enemies;
 
-namespace Managers
+namespace Managers.WaveManagement
 {
     public class EnemySpawnerItem : SpawnerItem
     {

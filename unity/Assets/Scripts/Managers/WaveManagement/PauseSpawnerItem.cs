@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Managers
+namespace Managers.WaveManagement
 {
     public class PauseSpawnerItem : SpawnerItem
     {

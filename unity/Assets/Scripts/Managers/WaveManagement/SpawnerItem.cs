@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace Managers
+namespace Managers.WaveManagement
 {
     public abstract class SpawnerItem
     {

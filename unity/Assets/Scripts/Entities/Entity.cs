@@ -10,8 +10,13 @@ namespace Entities
         
         protected void KillMe()
         {
+            OnKilled();
             Destroy(gameObject);
             IsDisposed = true;
+        }
+
+        protected virtual void OnKilled()
+        {
         }
 
         protected void WaitForSeconds(float seconds, Action oc = null)

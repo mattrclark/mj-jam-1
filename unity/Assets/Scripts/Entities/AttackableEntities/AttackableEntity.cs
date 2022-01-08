@@ -4,35 +4,48 @@ namespace Entities.AttackableEntities
 {
     public abstract class AttackableEntity : Entity
     {
-        private float health;
+        public float Health    { get; private set; }
+        public float MaxHealth { get; private set; }
 
         private int   iFrames;
         private float lastHitFrame;
 
-        public bool IsAlive => health > 0;
+        public bool IsAlive => Health > 0;
 
         protected void Initialise(float health, int iFrames)
         {
-            this.health  = health;
+            MaxHealth    = health;
+            Health       = health;
             this.iFrames = iFrames;
             lastHitFrame = 0;
+        }
+
+        public void Heal(float value)
+        {
+            Health += value;
+            Health =  Mathf.Clamp(Health, 0, MaxHealth);
+            OnHeal(value);
         }
 
         public void Damage(float damage)
         {
             if (Time.frameCount <= lastHitFrame + iFrames)
                 return;
-            
-            health -= damage;
+
+            Health -= damage;
 
             lastHitFrame = Time.frameCount;
-            
-            OnDamaged();
+
+            OnDamaged(damage);
 
             if (!IsAlive)
                 KillMe();
         }
 
-        protected abstract void OnDamaged();
+        protected abstract void OnDamaged(float value);
+
+        protected virtual void OnHeal(float value)
+        {
+        }
     }
 }

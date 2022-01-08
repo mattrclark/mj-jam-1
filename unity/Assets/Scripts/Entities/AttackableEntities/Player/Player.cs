@@ -1,5 +1,6 @@
 using Entities.Weapons;
 using UnityEngine;
+using UnityEngine.UI;
 using Values;
 
 namespace Entities.AttackableEntities.Player
@@ -13,12 +14,16 @@ namespace Entities.AttackableEntities.Player
         public Animator  weaponAnimator;
         public Transform weaponParent;
 
-        public Weapon weaponGo;
+        public SpriteRenderer bodySr;
+        public Weapon         weaponGo;
 
         private Vector2     attackDirection;
         private Weapon      currentWeapon;
         private Vector2     movement;
         private Rigidbody2D rb;
+
+        // TODO: Temporary. Add this to a manager
+        public Text healthText;
 
         private void Awake()
         {
@@ -28,7 +33,9 @@ namespace Entities.AttackableEntities.Player
 
             currentWeapon = Instantiate(weaponGo, new Vector2(0, 0.75f), Quaternion.identity, weaponParent);
 
-            Initialise(10, 5);
+            Initialise(10, 30);
+
+            UpdateHealthText();
         }
 
         private void Update()
@@ -73,16 +80,25 @@ namespace Entities.AttackableEntities.Player
                 currentWeapon.Attack(attackDirection);
         }
 
-        protected override void OnDamaged()
+        protected override void OnDamaged(float value)
         {
-            // todo: Get the body sprite renderer
-            var sr = GetComponent<SpriteRenderer>();
+            var originalColor = bodySr.color;
 
-            var originalColor = sr.color;
+            bodySr.color = Color.red;
 
-            sr.color = Color.red;
+            WaitForSeconds(0.1f, () => bodySr.color = originalColor);
+            
+            UpdateHealthText();
+        }
 
-            WaitForSeconds(0.1f, () => sr.color = originalColor);
+        protected override void OnHeal(float value)
+        {
+            UpdateHealthText();
+        }
+
+        private void UpdateHealthText()
+        {
+            healthText.text = $"{Health}/{MaxHealth}";
         }
     }
 }

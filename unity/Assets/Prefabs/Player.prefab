@@ -262,8 +262,10 @@ MonoBehaviour:
   bodyAnimator: {fileID: 1687071777733592396}
   weaponAnimator: {fileID: 5930538557365941448}
   weaponParent: {fileID: 1353737456575249039}
+  bodySr: {fileID: 1687071776048581056}
   weaponGo: {fileID: 4006373536544511394, guid: 421dda8abde114eb19fd5d907ed45c96,
     type: 3}
+  healthText: {fileID: 0}
 --- !u!50 &1687071778101692240
 Rigidbody2D:
   serializedVersion: 4

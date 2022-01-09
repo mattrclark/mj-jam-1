@@ -7,6 +7,18 @@ using UnityEngine.UI;
 
 namespace Managers.WaveManagement
 {
+    /*
+     * TODO: Add xp for killing enemies. This can used for auto upgrades as players play.
+     * The more xp players gain, the better weapons and faster shooting speeds they get.
+     * This needs to scale with the difficultly of the waves.
+     * TODO: Add difficulty in wave variants.
+     * TODO: Add 2 gamemodes -> Endless & Standard 
+     * Standard: Limited number of waves with a boss at the end.
+     *      Xp/Score & Time are recorded for leaderboard.
+     * Endless: Use some waves as a start then add more enemies for each one at random.
+     *      Keep going until the player dies. Save score of their xp gain.
+     */
+    
     public interface IWaveContext
     {
         Coroutine StartCoroutine(IEnumerator enumerator);

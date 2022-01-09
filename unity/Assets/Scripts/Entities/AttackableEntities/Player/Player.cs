@@ -1,4 +1,5 @@
 using Entities.Weapons;
+using Managers.WaveManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using Values;
@@ -89,6 +90,9 @@ namespace Entities.AttackableEntities.Player
             WaitForSeconds(0.1f, () => bodySr.color = originalColor);
             
             UpdateHealthText();
+
+            if (!IsAlive)
+                WaveManager.Instance.OnGameOver();
         }
 
         protected override void OnHeal(float value)

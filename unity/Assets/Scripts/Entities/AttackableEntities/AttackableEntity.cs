@@ -29,7 +29,7 @@ namespace Entities.AttackableEntities
 
         public void Damage(float damage)
         {
-            if (Time.frameCount <= lastHitFrame + iFrames)
+            if (damage == 0 || Time.frameCount <= lastHitFrame + iFrames)
                 return;
 
             Health -= damage;

@@ -13,6 +13,8 @@ namespace Managers.WaveManagement
 
     public class WaveManager : MonoBehaviour, IWaveContext
     {
+        [SerializeField] private bool isEnabled;
+
         // Spawners
         public EnemySpawner northSpawner;
         public EnemySpawner southSpawner;
@@ -28,7 +30,7 @@ namespace Managers.WaveManagement
 
         private int enemiesKilled;
 
-        private Wave[]     waves;
+        private Wave[]       waves;
         private HealthPickup currentWavePickup;
 
         public static WaveManager Instance { get; private set; }
@@ -51,30 +53,49 @@ namespace Managers.WaveManagement
                                  new SpawnerSequence(southSpawner)
                                     .AddEnemy(EnemyType.Drone, 1)),
                         new Wave(this,
+                                 new SpawnerSequence(westSpawner)
+                                    .AddEnemy(EnemyType.Turret, 1),
                                  new SpawnerSequence(eastSpawner)
                                     .AddEnemy(EnemyType.Drone, 1)),
                         new Wave(this,
+                                 new SpawnerSequence(northSpawner)
+                                    .AddEnemy(EnemyType.Turret, 1),
+                                 new SpawnerSequence(southSpawner)
+                                    .AddEnemy(EnemyType.Turret, 1),
                                  new SpawnerSequence(westSpawner)
                                     .AddEnemy(EnemyType.Drone, 1)),
                         new Wave(this,
                                  new SpawnerSequence(northSpawner)
                                     .AddEnemy(EnemyType.Drone, 2)
-                                    .AddPause(5f)
+                                    .AddPause(2f)
+                                    .AddEnemy(EnemyType.Turret, 2)
+                                    .AddPause(2f)
                                     .AddEnemy(EnemyType.Drone, 1),
                                  new SpawnerSequence(southSpawner)
                                     .AddEnemy(EnemyType.Drone, 2)
                                     .AddPause(2f)
-                                    .AddEnemy(EnemyType.Drone, 4))
+                                    .AddEnemy(EnemyType.Drone, 4),
+                                 new SpawnerSequence(eastSpawner)
+                                    .AddEnemy(EnemyType.Drone, 2)
+                                    .AddPause(2f)
+                                    .AddEnemy(EnemyType.Turret, 1),
+                                 new SpawnerSequence(westSpawner)
+                                    .AddEnemy(EnemyType.Drone, 2)
+                                    .AddPause(2f)
+                                    .AddEnemy(EnemyType.Turret, 1))
                     };
-
+            
             StartWave();
         }
 
-        public void StartWave()
+        private void StartWave()
         {
+            if (!isEnabled)
+                return;
+            
             waves[currentWave].InitiateSequence();
 
-            if(currentWave > 0 && (currentWavePickup == null || currentWavePickup.IsDisposed))
+            if (currentWave > 0 && (currentWavePickup == null || currentWavePickup.IsDisposed))
                 currentWavePickup = Instantiate(healthPickupGo, Vector2.zero, Quaternion.identity);
 
             waveText.text        = $"{currentWave + 1}";
@@ -87,6 +108,9 @@ namespace Managers.WaveManagement
 
         public void EnemyKilled()
         {
+            if (!isEnabled)
+                return;
+            
             enemiesKilled++;
             enemiesLeftText.text = $"{waves[currentWave].TotalEnemies - enemiesKilled}";
 
@@ -94,7 +118,7 @@ namespace Managers.WaveManagement
                 NextWave();
         }
 
-        public void NextWave()
+        private void NextWave()
         {
             currentWave++;
             enemiesKilled = 0;
@@ -103,6 +127,11 @@ namespace Managers.WaveManagement
                 waveText.text = "WIN!";
             else
                 StartWave();
+        }
+
+        public void OnGameOver()
+        {
+            waveText.text = "LOSE!";
         }
     }
 }

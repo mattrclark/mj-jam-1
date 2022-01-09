@@ -93,9 +93,9 @@ GameObject:
   - component: {fileID: 4218000351691888806}
   - component: {fileID: 4218000351691888807}
   - component: {fileID: 4218000351691888809}
-  - component: {fileID: 8009105125650242120}
+  - component: {fileID: 1165120553242956737}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172,7 +172,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8009105125650242120
+--- !u!114 &1165120553242956737
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4218000351691888802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f99d5ab366d4a1d92cb26d17f6e3860, type: 3}
+  m_Script: {fileID: 11500000, guid: ee49fd0f1151432792ac09ff838ae9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthPickup: {fileID: 8164262694629618086, guid: cf73fd588c27d437d97d981d737ab5c7,

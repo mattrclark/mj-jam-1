@@ -1,9 +1,10 @@
 using Entities.AttackableEntities.Enemies;
+using Entities.AttackableEntities.Player;
 using UnityEngine;
 
 namespace Entities.Weapons
 {
-    public class Bullet : Entity
+    public class EnemyBullet : Entity
     {
         private float       damage;
         private Vector2     velocity;
@@ -31,11 +32,12 @@ namespace Entities.Weapons
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.TryGetComponent<Enemy>(out var enemy))
-                enemy.Damage(damage);
+            if (other.TryGetComponent<Player>(out var player))
+                player.Damage(damage);
 
-            if(!other.TryGetComponent<Bullet>(out _) &&
-               !other.TryGetComponent<EnemyBullet>(out _))
+            if (!other.TryGetComponent<Enemy>(out _)  &&
+                !other.TryGetComponent<Bullet>(out _) &&
+                !other.TryGetComponent<EnemyBullet>(out _))
                 KillMe();
         }
     }

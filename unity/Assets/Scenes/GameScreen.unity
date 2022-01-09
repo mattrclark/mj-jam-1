@@ -166,6 +166,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyParent: {fileID: 968811273}
   droneGo: {fileID: 4218000351691888802, guid: bdb63395fce67419db3a23c072c9bb26, type: 3}
+  turretGo: {fileID: 4359286012097817002, guid: d7b6c0d2913c7408d9ecead451fbb931,
+    type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,10 +208,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followMe: {fileID: 1687071777733592392}
-  maxX: 9
-  minX: -9
-  maxY: 6
-  minY: -5
+  maxX: 5
+  minX: -5
+  maxY: 4
+  minY: -3
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -237,7 +239,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -261,7 +263,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -296,6 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59cdd96ca708433c86109efef1b867c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnabled: 1
   northSpawner: {fileID: 1891024380}
   southSpawner: {fileID: 1334661608}
   eastSpawner: {fileID: 179498877}
@@ -458,7 +461,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1214158059
 GameObject:
@@ -579,6 +582,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyParent: {fileID: 968811273}
   droneGo: {fileID: 4218000351691888802, guid: bdb63395fce67419db3a23c072c9bb26, type: 3}
+  turretGo: {fileID: 4359286012097817002, guid: d7b6c0d2913c7408d9ecead451fbb931,
+    type: 3}
 --- !u!1 &1337522327
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +629,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyParent: {fileID: 968811273}
   droneGo: {fileID: 4218000351691888802, guid: bdb63395fce67419db3a23c072c9bb26, type: 3}
+  turretGo: {fileID: 4359286012097817002, guid: d7b6c0d2913c7408d9ecead451fbb931,
+    type: 3}
 --- !u!1 &1561653913
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +752,7 @@ Transform:
   - {fileID: 1833939419}
   - {fileID: 1802498641}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1709037470
 GameObject:
@@ -8070,6 +8077,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyParent: {fileID: 968811273}
   droneGo: {fileID: 4218000351691888802, guid: bdb63395fce67419db3a23c072c9bb26, type: 3}
+  turretGo: {fileID: 4359286012097817002, guid: d7b6c0d2913c7408d9ecead451fbb931,
+    type: 3}
 --- !u!1 &1933103111
 GameObject:
   m_ObjectHideFlags: 0
@@ -8165,7 +8174,7 @@ RectTransform:
   - {fileID: 853580982}
   - {fileID: 1561653914}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8283,7 +8292,7 @@ PrefabInstance:
     - target: {fileID: 1687071778101692242, guid: 8221330265a5f47c4a4881048890da26,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1687071778101692242, guid: 8221330265a5f47c4a4881048890da26,
         type: 3}

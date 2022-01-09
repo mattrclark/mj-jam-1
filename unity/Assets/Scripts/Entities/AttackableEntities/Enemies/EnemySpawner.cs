@@ -11,6 +11,7 @@ namespace Entities.AttackableEntities.Enemies
     {
         public Transform  enemyParent;
         public GameObject droneGo;
+        public GameObject turretGo;
 
         // TODO: Remove me... Temp
         private float currentTime;
@@ -37,6 +38,9 @@ namespace Entities.AttackableEntities.Enemies
                 case EnemyType.Drone:
                     Spawn(droneGo);
                     break;
+                case EnemyType.Turret:
+                    Spawn(turretGo);
+                    break;
                 default:
                     goto case EnemyType.Drone;
             }
@@ -45,6 +49,8 @@ namespace Entities.AttackableEntities.Enemies
 
     public enum EnemyType
     {
-        Drone
+        Drone,
+        Turret,
+        Charger
     }
 }

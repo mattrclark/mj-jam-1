@@ -13,6 +13,9 @@ namespace Entities.AttackableEntities.Player
 
         private void Update()
         {
+            if (followMe == null)
+                return;
+            
             bool IsWithinBounds(float real, int max, int min) => real < max && real > min;
 
             var newPosition    = transform.position;

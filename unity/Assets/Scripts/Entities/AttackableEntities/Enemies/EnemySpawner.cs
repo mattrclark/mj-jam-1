@@ -4,7 +4,7 @@ namespace Entities.AttackableEntities.Enemies
 {
     public interface ISpawner
     {
-        void SpawnEnemy(EnemyType type);
+        void SpawnEnemy(EnemyType type, Vector2 position);
     }
 
     public class EnemySpawner : Entity, ISpawner
@@ -13,23 +13,10 @@ namespace Entities.AttackableEntities.Enemies
         public GameObject droneGo;
         public GameObject turretGo;
 
-        // TODO: Remove me... Temp
-        private float currentTime;
-
-        // public void FixedUpdate()
-        // {
-        //     if (!(Time.fixedTime > currentTime + 5f))
-        //         return;
-        //     
-        //     SpawnEnemy(EnemyType.Drone);
-        //     currentTime = Time.fixedTime;
-        // }
-
-        public void SpawnEnemy(EnemyType type)
+        public void SpawnEnemy(EnemyType type, Vector2 position)
         {
             void Spawn(GameObject go) => Instantiate(go,
-                                                     transform.position 
-                                                   + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f)),
+                                                     position,
                                                      Quaternion.identity,
                                                      enemyParent);
 

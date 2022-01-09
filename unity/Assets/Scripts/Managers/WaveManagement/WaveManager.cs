@@ -1,6 +1,7 @@
 using System.Collections;
 using Entities.AttackableEntities.Enemies;
 using Entities.Items;
+using Managers.WaveManagement.WaveData;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,10 +17,10 @@ namespace Managers.WaveManagement
         [SerializeField] private bool isEnabled;
 
         // Spawners
-        public EnemySpawner northSpawner;
-        public EnemySpawner southSpawner;
-        public EnemySpawner eastSpawner;
-        public EnemySpawner westSpawner;
+        public EnemySpawner spawnerGo;
+        public Transform    enemiesParent;
+
+        private EnemySpawner spawner;
 
         public HealthPickup healthPickupGo;
 
@@ -44,47 +45,13 @@ namespace Managers.WaveManagement
 
             DontDestroyOnLoad(gameObject);
 
-            waves = new[]
-                    {
-                        new Wave(this,
-                                 new SpawnerSequence(northSpawner)
-                                    .AddEnemy(EnemyType.Drone, 1)),
-                        new Wave(this,
-                                 new SpawnerSequence(southSpawner)
-                                    .AddEnemy(EnemyType.Drone, 1)),
-                        new Wave(this,
-                                 new SpawnerSequence(westSpawner)
-                                    .AddEnemy(EnemyType.Turret, 1),
-                                 new SpawnerSequence(eastSpawner)
-                                    .AddEnemy(EnemyType.Drone, 1)),
-                        new Wave(this,
-                                 new SpawnerSequence(northSpawner)
-                                    .AddEnemy(EnemyType.Turret, 1),
-                                 new SpawnerSequence(southSpawner)
-                                    .AddEnemy(EnemyType.Turret, 1),
-                                 new SpawnerSequence(westSpawner)
-                                    .AddEnemy(EnemyType.Drone, 1)),
-                        new Wave(this,
-                                 new SpawnerSequence(northSpawner)
-                                    .AddEnemy(EnemyType.Drone, 2)
-                                    .AddPause(2f)
-                                    .AddEnemy(EnemyType.Turret, 2)
-                                    .AddPause(2f)
-                                    .AddEnemy(EnemyType.Drone, 1),
-                                 new SpawnerSequence(southSpawner)
-                                    .AddEnemy(EnemyType.Drone, 2)
-                                    .AddPause(2f)
-                                    .AddEnemy(EnemyType.Drone, 4),
-                                 new SpawnerSequence(eastSpawner)
-                                    .AddEnemy(EnemyType.Drone, 2)
-                                    .AddPause(2f)
-                                    .AddEnemy(EnemyType.Turret, 1),
-                                 new SpawnerSequence(westSpawner)
-                                    .AddEnemy(EnemyType.Drone, 2)
-                                    .AddPause(2f)
-                                    .AddEnemy(EnemyType.Turret, 1))
-                    };
-            
+            spawner             = Instantiate(spawnerGo, Vector3.zero, Quaternion.identity);
+            spawner.enemyParent = enemiesParent;
+
+            var wv = new WaveVariantA(this, spawner);
+
+            waves = wv.Waves;
+
             StartWave();
         }
 
@@ -92,7 +59,7 @@ namespace Managers.WaveManagement
         {
             if (!isEnabled)
                 return;
-            
+
             waves[currentWave].InitiateSequence();
 
             if (currentWave > 0 && (currentWavePickup == null || currentWavePickup.IsDisposed))
@@ -110,7 +77,7 @@ namespace Managers.WaveManagement
         {
             if (!isEnabled)
                 return;
-            
+
             enemiesKilled++;
             enemiesLeftText.text = $"{waves[currentWave].TotalEnemies - enemiesKilled}";
 

@@ -5,9 +5,9 @@ namespace Managers.WaveManagement
     public class Wave
     {
         private readonly IWaveContext      context;
-        private readonly SpawnerSequence[] sequences;
+        private readonly WaveSequence[] sequences;
 
-        public Wave(IWaveContext context, params SpawnerSequence[] sequences)
+        public Wave(IWaveContext context, params WaveSequence[] sequences)
         {
             this.context   = context;
             this.sequences = sequences;

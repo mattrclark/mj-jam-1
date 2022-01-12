@@ -38,6 +38,6 @@ namespace Entities.AttackableEntities.Enemies
     {
         Drone,
         Turret,
-        Charger
+        Devil
     }
 }

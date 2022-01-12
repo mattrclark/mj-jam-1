@@ -1,4 +1,5 @@
 using Entities.AttackableEntities.Enemies;
+using Entities.Items;
 using UnityEngine;
 
 namespace Entities.Weapons
@@ -35,7 +36,8 @@ namespace Entities.Weapons
                 enemy.Damage(damage);
 
             if(!other.TryGetComponent<Bullet>(out _) &&
-               !other.TryGetComponent<EnemyBullet>(out _))
+               !other.TryGetComponent<EnemyBullet>(out _) &&
+               !other.TryGetComponent<HealthPickup>(out _))
                 KillMe();
         }
     }

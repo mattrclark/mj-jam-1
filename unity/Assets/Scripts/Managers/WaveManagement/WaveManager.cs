@@ -1,9 +1,10 @@
 using System.Collections;
 using Entities.AttackableEntities.Enemies;
+using Entities.AttackableEntities.Player;
 using Entities.Items;
 using Managers.WaveManagement.WaveData;
+using Screens;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Managers.WaveManagement
 {
@@ -18,7 +19,7 @@ namespace Managers.WaveManagement
      * Endless: Use some waves as a start then add more enemies for each one at random.
      *      Keep going until the player dies. Save score of their xp gain.
      */
-    
+
     public interface IWaveContext
     {
         Coroutine StartCoroutine(IEnumerator enumerator);
@@ -29,15 +30,16 @@ namespace Managers.WaveManagement
         [SerializeField] private bool isEnabled;
 
         // Spawners
-        public EnemySpawner spawnerGo;
-        public Transform    enemiesParent;
+        public EnemySpawner  spawnerGo;
+        public Transform     enemiesParent;
+        public Player        player;
+        public UpgradeScreen upgradeScreen;
+        public OverlayScreen overlay;
+        public PauseScreen   pauseScreen;
 
         private EnemySpawner spawner;
 
         public HealthPickup healthPickupGo;
-
-        public Text waveText;
-        public Text enemiesLeftText;
 
         private int currentWave;
 
@@ -45,6 +47,7 @@ namespace Managers.WaveManagement
 
         private Wave[]       waves;
         private HealthPickup currentWavePickup;
+        private bool         paused;
 
         public static WaveManager Instance { get; private set; }
 
@@ -63,7 +66,11 @@ namespace Managers.WaveManagement
             var wv = new WaveVariantA(this, spawner);
 
             waves = wv.Waves;
+            
+            player.OnHealthUpdate.Add("updateOverlay", overlay.UpdateHealthText);
 
+            overlay.UpdateHealthText($"{player.Health}/{player.MaxHealth}");
+            
             StartWave();
         }
 
@@ -77,12 +84,8 @@ namespace Managers.WaveManagement
             if (currentWave > 0 && (currentWavePickup == null || currentWavePickup.IsDisposed))
                 currentWavePickup = Instantiate(healthPickupGo, Vector2.zero, Quaternion.identity);
 
-            waveText.text        = $"{currentWave + 1}";
-            enemiesLeftText.text = $"{waves[currentWave].TotalEnemies}";
-        }
-
-        public void EndWave()
-        {
+            overlay.UpdateWaveCountText(currentWave + 1);
+            overlay.UpdateEnemyCountText(waves[currentWave].TotalEnemies);
         }
 
         public void EnemyKilled()
@@ -91,7 +94,7 @@ namespace Managers.WaveManagement
                 return;
 
             enemiesKilled++;
-            enemiesLeftText.text = $"{waves[currentWave].TotalEnemies - enemiesKilled}";
+            overlay.UpdateEnemyCountText(waves[currentWave].TotalEnemies - enemiesKilled);
 
             if (enemiesKilled >= waves[currentWave].TotalEnemies)
                 NextWave();
@@ -103,14 +106,38 @@ namespace Managers.WaveManagement
             enemiesKilled = 0;
 
             if (currentWave >= waves.Length)
-                waveText.text = "WIN!";
+                overlay.Win();
             else
                 StartWave();
         }
 
+        private void NextWaveSet()
+        {
+            
+        }
+
         public void OnGameOver()
         {
-            waveText.text = "LOSE!";
+            overlay.Lose();
+        }
+
+        public void Update()
+        {
+            if (!Input.GetKeyDown(KeyCode.Escape)) 
+                return;
+            
+            if (paused)
+            {
+                Time.timeScale      = 1;
+                pauseScreen.Hide();
+            }
+            else
+            {
+                Time.timeScale      = 0;
+                pauseScreen.Show();
+            }
+
+            paused = !paused;
         }
     }
 }

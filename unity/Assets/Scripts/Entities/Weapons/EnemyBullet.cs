@@ -1,5 +1,6 @@
 using Entities.AttackableEntities.Enemies;
 using Entities.AttackableEntities.Player;
+using Entities.Items;
 using UnityEngine;
 
 namespace Entities.Weapons
@@ -37,7 +38,8 @@ namespace Entities.Weapons
 
             if (!other.TryGetComponent<Enemy>(out _)  &&
                 !other.TryGetComponent<Bullet>(out _) &&
-                !other.TryGetComponent<EnemyBullet>(out _))
+                !other.TryGetComponent<EnemyBullet>(out _) &&
+                !other.TryGetComponent<HealthPickup>(out _))
                 KillMe();
         }
     }

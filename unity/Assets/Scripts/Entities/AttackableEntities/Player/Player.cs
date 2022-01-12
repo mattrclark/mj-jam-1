@@ -1,7 +1,7 @@
 using Entities.Weapons;
+using Helpers;
 using Managers.WaveManagement;
 using UnityEngine;
-using UnityEngine.UI;
 using Values;
 
 namespace Entities.AttackableEntities.Player
@@ -18,16 +18,18 @@ namespace Entities.AttackableEntities.Player
         public SpriteRenderer bodySr;
         public Weapon         weaponGo;
 
-        private Vector2     attackDirection;
-        private Weapon      currentWeapon;
-        private Vector2     movement;
-        private Rigidbody2D rb;
+        private Vector2 attackDirection;
+        private Weapon  currentWeapon;
+        private Vector2 movement;
 
-        // TODO: Temporary. Add this to a manager
-        public Text healthText;
+        private Event<string> onHealthUpdate;
+        private Rigidbody2D   rb;
+
+        public IEvent<string> OnHealthUpdate => onHealthUpdate;
 
         private void Awake()
         {
+            onHealthUpdate  = new Event<string>("OnHealthUpdate");
             rb              = GetComponent<Rigidbody2D>();
             movement        = new Vector2();
             attackDirection = new Vector2();
@@ -35,8 +37,6 @@ namespace Entities.AttackableEntities.Player
             currentWeapon = Instantiate(weaponGo, new Vector2(0, 0.75f), Quaternion.identity, weaponParent);
 
             Initialise(10, 30);
-
-            UpdateHealthText();
         }
 
         private void Update()
@@ -88,7 +88,7 @@ namespace Entities.AttackableEntities.Player
             bodySr.color = Color.red;
 
             WaitForSeconds(0.1f, () => bodySr.color = originalColor);
-            
+
             UpdateHealthText();
 
             if (!IsAlive)
@@ -102,7 +102,7 @@ namespace Entities.AttackableEntities.Player
 
         private void UpdateHealthText()
         {
-            healthText.text = $"{Health}/{MaxHealth}";
+            onHealthUpdate.Invoke($"{Health}/{MaxHealth}");
         }
     }
 }

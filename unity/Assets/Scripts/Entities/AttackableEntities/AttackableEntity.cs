@@ -42,6 +42,13 @@ namespace Entities.AttackableEntities
                 KillMe();
         }
 
+        public void IncreaseMaxHealth(int value)
+        {
+            Health    += value;
+            MaxHealth += value;
+            OnHeal(value);
+        }
+
         protected abstract void OnDamaged(float value);
 
         protected virtual void OnHeal(float value)

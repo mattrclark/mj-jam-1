@@ -49,6 +49,15 @@ namespace Managers.WaveManagement
 
             return this;
         }
+        
+        public WaveSequence AddEnemiesWithJitter(EnemyType type, int number, Vector2 initial)
+        {
+            for (var i = 0; i < number; i++)
+                items.Add(new EnemySpawnerItem(this, type, 1, initial + new Vector2(Random.Range(-1, 1), Random.Range(-1, 1))));
+
+            return this;
+        }
+        
 
         public WaveSequence AddPause(float time)
         {

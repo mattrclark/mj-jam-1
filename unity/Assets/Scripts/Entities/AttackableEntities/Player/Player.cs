@@ -36,7 +36,7 @@ namespace Entities.AttackableEntities.Player
 
             currentWeapon = Instantiate(weaponGo, new Vector2(0, 0.75f), Quaternion.identity, weaponParent);
 
-            Initialise(10, 30);
+            Initialise(6, 30);
         }
 
         private void Update()
@@ -103,6 +103,16 @@ namespace Entities.AttackableEntities.Player
         private void UpdateHealthText()
         {
             onHealthUpdate.Invoke($"{Health}/{MaxHealth}");
+        }
+
+        public void IncreaseWeaponDamage(float damageIncrease)
+        {
+            currentWeapon.IncreaseDamage(damageIncrease);
+        }
+
+        public void IncreaseFireRate(float fireRateChange)
+        {
+            currentWeapon.IncreaseFireRate(fireRateChange);
         }
     }
 }

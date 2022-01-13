@@ -15,18 +15,21 @@ namespace Screens
         public void ConfigureOptionA(string text, Action onClick)
         {
             optionAText.text = text;
+            optionA.onClick.RemoveAllListeners();
             optionA.onClick.AddListener(onClick.Invoke);
         }
         
         public void ConfigureOptionB(string text, Action onClick)
         {
             optionBText.text = text;
+            optionB.onClick.RemoveAllListeners();
             optionB.onClick.AddListener(onClick.Invoke);
         }
         
         public void ConfigureOptionC(string text, Action onClick)
         {
             optionCText.text = text;
+            optionC.onClick.RemoveAllListeners();
             optionC.onClick.AddListener(onClick.Invoke);
         }
     }

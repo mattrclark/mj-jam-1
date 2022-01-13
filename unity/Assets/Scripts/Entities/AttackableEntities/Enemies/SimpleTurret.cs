@@ -1,5 +1,6 @@
 using Entities.Weapons;
 using Helpers;
+using Managers.WaveManagement;
 using UnityEngine;
 
 namespace Entities.AttackableEntities.Enemies
@@ -16,8 +17,8 @@ namespace Entities.AttackableEntities.Enemies
         {
             player = GameObject.FindWithTag("Player")?.transform;
 
-            lastAttackTime = Time.fixedTime + 2f;
-            reloadTime   = 1f;
+            lastAttackTime = Time.fixedTime + 1f;
+            reloadTime     = Mathf.Max(1f - WaveManager.Instance.CompletedWaves * 0.05f, 0.6f);
 
             Initialise(5, 5);
         }
@@ -39,7 +40,7 @@ namespace Entities.AttackableEntities.Enemies
         protected override void OnKilled()
         {
             if (Random.Range(0f, 1f) > 0.8f)
-                Instantiate(healthPickup.gameObject, transform.position, Quaternion.identity);
+                Instantiate(healthPickup.gameObject, transform.position, Quaternion.identity, transform.parent);
         }
 
         private bool CanAttack => Time.fixedTime > lastAttackTime + reloadTime;
